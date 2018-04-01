@@ -1,0 +1,18 @@
+FROM centos:latest
+
+ENV http_proxy=proxy.mms-dresden.de:8080
+ENV https_proxy=proxy.mms-dresden.de:8080
+
+# Installiert die notwendigen Dateien und Tools. Legt die Verzeichnisstruktur fuer vim und ssh an
+RUN yum update -y && yum install vim openssh-server net-tools tmux git dos2unix -y && mkdir -p /root/.ssh && chmod 700 /root/.ssh && ssh-keygen -A
+COPY sshd_config /etc/ssh/
+COPY id* /root/.ssh/
+COPY entrypoint.sh /root/
+RUN mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys && chmod 644 /root/.ssh/authorized_keys &&chmod +x /root/entrypoint.sh && chmod 600 /root/.ssh/id_rsa && dos2unix /root/entrypoint.sh
+
+EXPOSE 22 	
+
+VOLUME ["/data"]
+
+ENTRYPOINT ["/root/entrypoint.sh"]
+
