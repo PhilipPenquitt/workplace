@@ -1,4 +1,4 @@
-"#############VUNDLE DETAILS#######################
+" VUNDLE DETAILS:
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -33,8 +33,9 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-"############# ENDE VUNDLE DETAILS ##########################
+" ENDE VUNDLE DETAILS
 
+" Andres Zeug:
 syntax enable " enable syntax processing
 
 set expandtab " tabs are spaces
@@ -124,7 +125,7 @@ set term=xterm
 set termencoding=utf8
 set t_Co=256
 
-"Dateiexplorer Einstellungen
+" Dateiexplorer Einstellungen:
 "Entfernt den Banner
 let g:netrw_banner = 0
 "oeffnet dateien in neuem Tab
@@ -139,3 +140,10 @@ let g:netrw_liststyle= 3
 "          autocmd!
 "            autocmd VimEnter,TabNew * :Vexplore
 "augroup END
+"zeigt punkte fuer alle spaces - nuetzlich fuer yaml Dateien
+set listchars+=space:·
+
+" Finding Files:
+" Search Down into Subfolders
+" Provides Tab Completion for all file related Tasks
+set path+=**
