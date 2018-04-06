@@ -1,4 +1,4 @@
-" VUNDLE DETAILS:
+"#############VUNDLE DETAILS#######################
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -12,10 +12,11 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 "Plugin 'Valloric/YouCompleteMe'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 "Plugin 'vim-syntastic/syntastic'
 "Plugin 'pearofducks/ansible-vim'
-
+Plugin 'ajh17/vimcompletesme'
+Plugin 'AutoComplPop'
 " All of your Plugins must be added before the following line
 
 call vundle#end()            " required
@@ -29,14 +30,9 @@ filetype plugin indent on    " required
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
-" ENDE VUNDLE DETAILS
 
-" Andres Zeug:
-syntax enable " enable syntax processing
+"syntax enable " enable syntax processing
 
 set expandtab " tabs are spaces
 set tabstop=4 " number of visual spaces per TAB
@@ -56,10 +52,10 @@ set foldnestmax=10      " 10 nested fold max
 set foldmethod=indent   " fold based on indent level
 
 
-highlight LiteralTabs ctermbg=darkgreen guibg=darkgreen
-match LiteralTabs /\s\  /
-highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-match ExtraWhitespace /\s\+$/
+"highlight LiteralTabs ctermbg=darkgreen guibg=darkgreen
+"match LiteralTabs /\s\  /
+"highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+"match ExtraWhitespace /\s\+$/
 
 set ruler " show me a ruler
 
@@ -82,11 +78,16 @@ set ignorecase
 "Zeigen immer die Tabline
 set showtabline=2
 
-"Mittels f3 und f4 können Zahlen deaktiviert und aktiviert werden
 nnoremap <f3> :set nonumber <bar> set norelativenumber<CR>
 nnoremap <f4> :set number <bar> set relativenumber<CR>
-"Mit F2 kann der Dateiexplorer geoffnet werden
-nnoremap <f2> :Vex<CR>
+nnoremap <f2> :Vex<CR> "Mit F2 kann der Dateiexplorer geoffnet werden
+"Es wird eine neuer Tab geöffent und diesem dann find ausgführt, ich muss nur
+"noch die Datei reinschreiben
+nnoremap <f5> :call Finding()<CR>:find
+
+function Finding()
+             :tabnew
+     endfunction
 
 nnoremap tf :tabfirst<CR>
 nnoremap tp :tabprevious<CR>
@@ -101,14 +102,10 @@ nnoremap <C-t> :tabnew<CR>
 inoremap <C-t>     <Esc>:tabnew<CR>
 
 " Syntax für Ansible
-
-"autocmd BufNewFile,BufRead *.yml   set syntax=ansible
-"autocmd BufNewFile,BufRead *.yaml   set syntax=ansible
-
 au BufRead,BufNewFile */playbooks/*.yml set filetype=ansible
 
 "Code Snippets
-nnoremap ,play :-1read $HOME/.vim/.skeleton.playbook.yaml<CR>2jfwa
+nnoremap ,playbook :-1read $HOME/.vim/.skeleton.playbook.yaml<CR>2jfwa
 
 set statusline=%f         " Path to the file
 set statusline+=\ -\      " Separator
@@ -120,12 +117,12 @@ set statusline+=%L   " Total lines
 set statusline=Current:\ %-4l\ Total:\ %-4L
 set statusline+=%=        " Switch to the right side
 
-" Farbenenstellungen
+" Farbeneinstellungen
 set term=xterm
 set termencoding=utf8
 set t_Co=256
 
-" Dateiexplorer Einstellungen:
+"Dateiexplorer Einstellungen
 "Entfernt den Banner
 let g:netrw_banner = 0
 "oeffnet dateien in neuem Tab
@@ -140,8 +137,14 @@ let g:netrw_liststyle= 3
 "          autocmd!
 "            autocmd VimEnter,TabNew * :Vexplore
 "augroup END
+
+
+"Enter lässt tab direkt auswählen
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
 "zeigt punkte fuer alle spaces - nuetzlich fuer yaml Dateien
-set listchars+=space:·
+set listchars=trail:·
+set list
 
 " Finding Files:
 " Search Down into Subfolders
