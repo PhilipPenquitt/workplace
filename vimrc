@@ -11,13 +11,13 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'ervandew/supertab'
-"Plugin 'vim-syntastic/syntastic'
-"Plugin 'pearofducks/ansible-vim'
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'ajh17/vimcompletesme'
 Plugin 'AutoComplPop'
+Plugin 'godlygeek/tabular'
+
 " All of your Plugins must be added before the following line
+" https://vimawesome.com/plugin/tabular"
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -34,33 +34,27 @@ filetype plugin indent on    " required
 
 "syntax enable " enable syntax processing
 
-set expandtab " tabs are spaces
-set tabstop=4 " number of visual spaces per TAB
-set softtabstop=4   " number of spaces in tab when editing
+set expandtab             " tabs are spaces
+set tabstop=4             " number of visual spaces per TAB
+set softtabstop=4         " number of spaces in tab when editing
 
-set showcmd             " show command in bottom bar
-set wildmenu            " visual autocomplete for command menu
-set wildmode=list:longest
+set showcmd               " show command in bottom bar
+set wildmenu              " visual autocomplete for command menu
+set wildmode=list:longest " das Menue wir lang dargetstellt
 
-set lazyredraw          " redraw only when we need to.
+set lazyredraw            " redraw only when we need to.
 
-set showmatch           " highlight matching [{()}]
+set showmatch             " highlight matching [{()}]
 
-set foldenable          " enable folding
-set foldlevelstart=10   " open most folds by default
-set foldnestmax=10      " 10 nested fold max
-set foldmethod=indent   " fold based on indent level
+set foldenable            " enable folding
+set foldlevelstart=10     " open most folds by default
+set foldnestmax=10        " 10 nested fold max
+set foldmethod=indent     " fold based on indent level
 
+set ruler                 " show me a ruler
 
-"highlight LiteralTabs ctermbg=darkgreen guibg=darkgreen
-"match LiteralTabs /\s\  /
-"highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-"match ExtraWhitespace /\s\+$/
-
-set ruler " show me a ruler
-
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
+set incsearch             " search as characters are entered
+set hlsearch              " highlight matches
 
 set backup
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
@@ -72,18 +66,13 @@ set relativenumber
 set ruler
 set linebreak
 set laststatus=2
-" Es wird Case insensitiv gesucht
-set ignorecase
-
-"Zeigen immer die Tabline
-set showtabline=2
+set ignorecase  " Es wird Case insensitiv gesucht
+set showtabline=2 " Zeigen immer die Tabline
 
 nnoremap <f3> :set nonumber <bar> set norelativenumber<CR>
 nnoremap <f4> :set number <bar> set relativenumber<CR>
-nnoremap <f2> :Vex<CR> "Mit F2 kann der Dateiexplorer geoffnet werden
-"Es wird eine neuer Tab geöffent und diesem dann find ausgführt, ich muss nur
-"noch die Datei reinschreiben
-nnoremap <f5> :call Finding()<CR>:find
+nnoremap <f2> :Vex<CR> " Mit F2 kann der Dateiexplorer geoffnet werden
+nnoremap <f5> :call Finding()<CR>:find " Es wird eine neuer Tab geöffent und diesem dann find ausgführt, ich muss nur noch die Datei reinschreiben
 
 function Finding()
              :tabnew
@@ -97,9 +86,9 @@ nnoremap tc :tabnew<CR>
 nnoremap tl :tablast<CR>
 nnoremap tm  :tabm<Space>
 nnoremap td :tabclose<CR>
-nnoremap <C-t> :tabnew<CR>
-"Es kann mit ctrl t immer ein neuer Tab aufgemacht werden
+nnoremap <C-t> :tabnew<CR>"Es kann mit ctrl t immer ein neuer Tab aufgemacht werden
 inoremap <C-t>     <Esc>:tabnew<CR>
+nnoremap ,cd :cd %:p:h<CR>:pwd<CR> "Wechsel das Verzeichnis und zeig das neue an
 
 " Syntax für Ansible
 au BufRead,BufNewFile */playbooks/*.yml set filetype=ansible
@@ -107,7 +96,7 @@ au BufRead,BufNewFile */playbooks/*.yml set filetype=ansible
 "Code Snippets
 nnoremap ,playbook :-1read $HOME/.vim/.skeleton.playbook.yaml<CR>2jfwa
 
-set statusline=%f         " Path to the file
+set statusline=%F         " Path to the file
 set statusline+=\ -\      " Separator
 set statusline+=FileType: " Label
 set statusline+=%y        " Filetype of the file
@@ -150,3 +139,5 @@ set list
 " Search Down into Subfolders
 " Provides Tab Completion for all file related Tasks
 set path+=**
+"Escape Key ist ctrl C
+inoremap <C-c> <Esc>
