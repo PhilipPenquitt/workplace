@@ -21,6 +21,7 @@
        - npm
        - owncloud-client-cmd
      become: yes
+
    - name: Install Git tools
      pip:
        name: thefuck
@@ -29,34 +30,47 @@
        - thefuck
        - ddgr
      become: yes 
+
+#   - name: Install Tmuxinator
+#     gem:
+#       name: tmuxinator
+#       state: present
+#     become: yes
+
    - name: Install npm tools
      npm:
        name: tldr
        global: yes
      become: yes
+
    - name: create dotfile directory
      file:
        path: /home/pi/dotfiles
        owner: pi
        group: pi
+
    - name: Configure tmux configuration
      file:
        path: /home/pi/dotfiles/tmux.conf
        owner: pi
        group: pi
+
    - name: Set vim config
      file:
        path: /home/pi/dotfiles/vim.rc
        owner: pi
        group: pi
+
    - name: download tmux theme pack
      git:
        repo: 'https://github.com/jimeh/tmux-themepack.git'
        dest: /home/pi/git/tmux-themepack
+
    - name: Install Vundle 
      git:
        repo: 'https://github.com/VundleVim/Vundle.vim.git'
        dest: /home/pi/.vim/bundle/Vundle.vim
+
    - name: Set link for Dotfiles
      file:
        src: '/home/pi/dotfiles/{{ item.src }}'
@@ -65,12 +79,14 @@
      with_items:
        - { src: 'tmux.conf', dest: '/home/pi/.tmux.conf' }
        - { src: 'vim.rc', dest: '/home/pi/.vimrc' }
+
    - name: Creation of own bin files 
      file:
        path: /home/pi/bin
        owner: pi
        group: pi
        state: directory
+
    - name: Installation cht.sh
      get_url:
        url: https://cht.sh/:cht.sh

@@ -1,0 +1,340 @@
+"#############VUNDLE DETAILS#######################
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/usr/local/opt/fzf
+set rtp+=/usr/bin/python
+call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'tpope/vim-surround'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'glench/vim-jinja2-syntax'
+Plugin 'grep.vim'
+Plugin 'VundleVim/Vundle.vim'
+" Plugin 'jiangmiao/auto-pairs'
+" Plugin 'ajh17/vimcompletesme'
+" Plugin 'AutoComplPop'
+" Plugin 'ervandew/supertab'
+Plugin 'godlygeek/tabular'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'simnalamburt/vim-mundo'
+Plugin 'junegunn/fzf.vim'
+Plugin 'hashivim/vim-terraform'
+Plugin 'juliosueiras/vim-terraform-completion'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'scrooloose/nerdtree'
+Plugin 'valloric/youcompleteme'
+" " Track the engine.
+Plugin 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+
+" Das letzte Plugin --> https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#easier-split-navigations ; https://blog.bugsnag.com/tmux-and-vim/
+" All of your Plugins must be added before the following line
+"https://vimawesome.com/plugin/tabular"
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+
+set modelines=5
+syntax enable " enable syntax processing
+
+set expandtab " tabs are spaces
+set tabstop=4 " number of visual spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+set smarttab
+set shiftwidth=4
+
+set showcmd             " show command in bottom bar
+set wildmenu            " visual autocomplete for command menu
+set wildmode=list:longest
+
+set lazyredraw          " redraw only when we need to.
+
+set showmatch           " highlight matching [{()}]
+
+set foldenable          " enable folding
+set foldlevelstart=10   " open most folds by default
+set foldnestmax=10      " 10 nested fold max
+set foldmethod=indent   " fold based on indent level
+
+
+"highlight LiteralTabs ctermbg=darkgreen guibg=darkgreen
+"match LiteralTabs /\s\  /
+"highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+"match ExtraWhitespace /\s\+$/
+
+set ruler " show me a ruler
+
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set writebackup
+set number
+set relativenumber
+set cursorline
+set ruler
+set linebreak
+set laststatus=2
+" Es wird Case insensitiv gesucht
+set ignorecase
+
+"Zeigen immer die Tabline
+set showtabline=2
+
+" wir wollen immer ein Undofile haben
+set undofile
+" Wir aendern das Verzeichnis fuer die undofiles
+set undodir=~/.vim/temp
+
+nnoremap <f3> :set nonumber <bar> set norelativenumber<CR>
+nnoremap <f6> :set number <bar> set relativenumber<CR>
+nnoremap <f2> :Vex<CR> "Mit F2 kann der Dateiexplorer geoffnet werden
+"Es wird eine neuer Tab geöffent und diesem dann find ausgführt, ich muss nur
+"noch die Datei reinschreiben
+nnoremap <f5> :call Finding()<CR>:find
+nnoremap <f10> :MundoToggle<CR>
+function Finding()
+             :tabnew
+     endfunction
+
+" Eigentlich braucht man für die Tab befehle keine Mapping
+" nnoremap tf    : tabfirst<CR>
+" nnoremap tp    : tabprevious<CR>
+" nnoremap tn    : tabnext<CR>
+" nnoremap te    : tabedit
+" nnoremap tc    : tabnew<CR>
+" nnoremap tl    : tablast<CR>
+" nnoremap tm    : tabm<Space>
+" nnoremap td    : tabclose<CR>
+" nnoremap <C-t> : tabnew<CR>"Es kann mit ctrl t immer ein neuer Tab aufgemacht werden
+" nnoremap ,cd   : cd %                                                                : p        : h<CR> : pwd<CR> "Wechsel das Verzeichnis und zeig das neue an
+" nnoremap bn    : bn<CR>
+" nnoremap bp    : bp<CR>
+" nnoremap ls    : ls<CR>
+" nnoremap be    : b<Space>
+" " nnoremap nn  : set nonumber <bar> set norelativenumber<CR> vim wartet sehr
+" " lange für das Instert bei suchen wegen dem zweiten n
+" nnoremap bd    : bd<CR>
+" nnoremap bc    : enew<CR>
+nnoremap <C-f> : NERDTreeToggle<CR>
+
+" Syntax für Ansible
+au BufRead,BufNewFile */playbooks/*.yml set filetype=ansible
+" autocmd BufNewFile,BufRead *.pp set filetype=puppet
+
+"Code Snippets
+nnoremap ,playbook :-1read $HOME/.vim/.skeleton.playbook.yaml<CR>2jfwa
+
+" Farbeneinstellungen
+set term=xterm
+set termencoding=utf8
+set t_Co=256
+
+"Dateiexplorer Einstellungen
+"Entfernt den Banner
+let g:netrw_banner = 0
+"oeffnet dateien in neuem Tab
+let g:netrw_browse_split=0
+" Groesse Des Dateiexplorers
+let g:netrw_winsize = 15
+" Baummenue im Explorer
+let g:netrw_liststyle= 3
+"Doku https://shapeshed.com/vim-netrw/
+" Netrw immer offen
+"augroup ProjectDrawer
+"          autocmd!
+"            autocmd VimEnter,TabNew * :Vexplore
+"augroup END
+
+
+"Enter lässt tab direkt auswählen
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+"zeigt punkte fuer alle spaces - nuetzlich fuer yaml Dateien
+set listchars=trail:·
+set list
+
+" Finding Files:
+" Search Down into Subfolders
+" Provides Tab Completion for all file related Tasks
+set path+=**
+"Escape Key ist ctrl C
+imap jk <Esc>
+" Bei der Verwendung von Buffern werden diese beim Wechselgespeichert
+set autowriteall
+
+
+"""" Set Statusline """
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+
+" Autocommands
+" Autocommand to Foramt Terraform at saving
+"autocmd BufWrite *.tf :
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+"
+" Syntastic Konfiguration
+"
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_bandit_exec='/usr/local/bin/bandit'
+let g:syntastic_puppetlint_exec='/usr/local/bin/puppet-lint'
+let g:syntastic_jsonlint_exec='/usr/local/bin/jsonlint'
+let g:syntastic_json_checkers=['jsonlint']
+let g:syntastic_ansible_lint_exec='/usr/local/bin/ansible-lint'
+let g:terraform_align=1
+let g:terraform_fold_sections=1
+
+
+" In Vim Splits kann nun mit ctrl j mich zum beispiel nach unten bewegen -
+" benötige ich dank tmux Plugin nicht mehr
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
+
+" Defaut Settings fuer das Split verhalten
+set splitbelow
+set splitright
+
+" Funktioniert per default
+" Swap top/bottom or left/right split
+" Ctrl+W R
+" Break out current window into a new tabview
+" Ctrl+W T
+" Close every window in the current tabview but the current one
+" Ctrl+W o
+
+" Terraform minimale Config
+let g:terraform_completion_keys = 1
+let g:syntastic_terraform_tffilter_plan = 1
+" (Optional)Remove Info(Preview) window
+set completeopt-=preview
+
+
+" (Optional)Hide Info(Preview) window after completions
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+" autocmd FileType * let b:vcm_tab_complete = ''
+let g:tmux_navigator_disable_when_zoomed = 1
+let g:tmux_navigator_save_on_switch = 2
+
+
+" Setzen der textbreite für die verschiedenen Dateiformate:
+" Settings for Text
+autocmd BufNewFile,BufRead *.text
+    \ set tabstop=4|
+    \ set softtabstop=4|
+    \ set shiftwidth=4|
+    \ set textwidth=79|
+    \ set expandtab|
+    \ set autoindent|
+    \ set fileformat=unix|
+
+" Settings for Asciidoc
+autocmd BufNewFile,BufRead *.asciidoc
+    \ set tabstop=4|
+    \ set softtabstop=4|
+    \ set shiftwidth=4|
+    \ set textwidth=79|
+    \ set expandtab|
+    \ set fileformat=unix|
+
+autocmd BufNewFile,BufRead *.txt
+    \ set tabstop=4|
+    \ set softtabstop=4|
+    \ set shiftwidth=4|
+    \ set textwidth=79|
+    \ set expandtab|
+    \ set fileformat=unix|
+
+" Settings for Markdown
+autocmd BufNewFile,BufRead *.md
+    \ set tabstop=4|
+    \ set softtabstop=4|
+    \ set shiftwidth=4|
+    \ set textwidth=79|
+    \ set expandtab|
+    \ set fileformat=unix|
+
+
+" Python Settings for programming
+autocmd BufNewFile,BufRead *.py
+    \ set tabstop=4|
+    \ set softtabstop=4|
+    \ set shiftwidth=4|
+    \ set textwidth=79|
+    \ set expandtab|
+    \ set autoindent|
+    \ set fileformat=unix|
+
+set clipboard=unnamed
+
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar': 1,
+      \ 'qf': 1,
+      \ 'notes': 1,
+      \ 'unite': 1,
+      \ 'vimwiki': 1,
+      \ 'pandoc': 1,
+      \ 'infolog': 1,
+      \ 'mail': 1
+      \}
+
+" better key bindings for UltiSnipsExpandTrigger and ycm
+" So kann mittels Tab ein Vervollständigung ausgewählt werden
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsSnippetsDir = $HOME.'/.vim/UltiSnips/'
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+let g:ycm_complete_in_comments = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
+" Setzen der textbreite für die verschiedenen Dateiformate:
+"Mutt Settings
+au BufRead /tmp/mutt-* set tw=72
+"Text Breite
+au BufRead /tmp/mutt-* set tw=72
+
+" autocommand to remove trailing whitespaces wenn die Datei gespeichert wird.
+autocmd BufWritePre * %s/\s\+$//e
