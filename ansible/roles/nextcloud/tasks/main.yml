@@ -1,9 +1,42 @@
 ---
 
-- name: Install php packages
+- name: Install necessary packages
   package:
     name: "{{ item }}"
     state: present
   with_items:
-    - php
-    -  
+    - epel-release
+    - yum-utils
+    - unzip
+    - curl
+    - wget
+    - bash-completion
+    - policycoreutils-python
+    - mlocate
+    - bzip2
+
+- name: Update the System
+  package:
+    name: *
+    state: latest
+
+- name: Update Installation Softwarecollection
+  package:
+    name: centos-release-scl
+    state: latest
+
+- name: Install necessary php packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rh-php72
+    - rh-php72-php
+    - rh-php72-php-gd
+    - rh-php72-php-mbstring
+    - rh-php72-php-intl
+    - rh-php72-php-pecl-apcu
+    - rh-php72-php-mysqlnd
+    - rh-php72-php-pecl-redis
+    - rh-php72-php-opcache
+    - rh-php72-php-imagick

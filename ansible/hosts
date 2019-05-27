@@ -1,1 +1,5 @@
 raspberrypi
+
+[strato]
+# nextcloud ansible_ssh_host=1.1.1.1 ansible_ssh_port=22 ansible_ssh_user=root
+nextcloud # Hosteintrag muss entsprechend gesetzt werden.
