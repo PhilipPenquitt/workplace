@@ -113,7 +113,7 @@
      with_items:
        - { src: 'tmux.conf', dest: '/home/pi/.tmux.conf' }
        - { src: 'vim.rc', dest: '/home/pi/.vimrc' }
-       - { src: 'zshrc', dest: 'home/pi/.zshrc'}
+       - { src: 'zsh.rc', dest: 'home/pi/.zshrc'}
 
    - name: Creation of own bin files
      file:

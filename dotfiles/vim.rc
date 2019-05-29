@@ -2,6 +2,7 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=/usr/local/opt/fzf
@@ -111,6 +112,9 @@ set undofile
 " Wir aendern das Verzeichnis fuer die undofiles
 set undodir=~/.vim/temp
 
+"https://stackoverflow.com/questions/11560201/backspace-key-not-working-in-vim-vi
+set backspace=2  "compatible with version 5.4 and earlier
+
 nnoremap <f3> :set nonumber <bar> set norelativenumber<CR>
 nnoremap <f6> :set number <bar> set relativenumber<CR>
 nnoremap <f2> :Vex<CR> "Mit F2 kann der Dateiexplorer geoffnet werden
@@ -185,6 +189,7 @@ set list
 set path+=**
 "Escape Key ist ctrl C
 imap jk <Esc>
+imap <C-L> <Esc>
 " Bei der Verwendung von Buffern werden diese beim Wechselgespeichert
 set autowriteall
 
@@ -338,3 +343,4 @@ au BufRead /tmp/mutt-* set tw=72
 
 " autocommand to remove trailing whitespaces wenn die Datei gespeichert wird.
 autocmd BufWritePre * %s/\s\+$//e
+
