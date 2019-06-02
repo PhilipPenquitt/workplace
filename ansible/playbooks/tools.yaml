@@ -13,13 +13,16 @@
        - ansible
        - vim
        - mtr
-       - nmap 
+       - nmap
        - tree
        - python3
        - python3-pip
        - silversearcher-ag
        - npm
        - owncloud-client-cmd
+       - zsh
+       - fonts-powerline
+       - buku
      become: yes
 
    - name: Install Git tools
@@ -29,7 +32,7 @@
      with_items:
        - thefuck
        - ddgr
-     become: yes 
+     become: yes
 
 #   - name: Install Tmuxinator
 #     gem:
@@ -66,7 +69,38 @@
        repo: 'https://github.com/jimeh/tmux-themepack.git'
        dest: /home/pi/git/tmux-themepack
 
-   - name: Install Vundle 
+   - name: Download oh-my-zsh
+     git:
+       repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+       dest: /home/pi/git/oh-my-zsh
+
+   - name: Setting up oh-my-zsh Symmlink
+     file:
+       src: '/home/pi/git/oh-my-zsh'
+       dest: /home/pi/.oh-my-zsh
+       state: link
+
+   - name: Download Powerlevel9k
+     git:
+       repo: 'https://github.com/bhilburn/powerlevel9k.git'
+       dest: /home/pi/.oh-my-zsh/custom/themes/powerlevel9k
+
+   - name: Download Powerlevel10k
+     git:
+       repo: 'https://github.com/romkatv/powerlevel10k.git'
+       dest: /home/pi/.oh-my-zsh/custom/themes/powerlevel10k
+
+   - name: Download fzf
+     git:
+       repo: 'https://github.com/junegunn/fzf.git'
+       dest: /home/pi/git/fzf
+     register: fzf_download
+
+   - debug:
+       msg: Install fzf finder with "~/.fzf/install"
+     when: fzf_download.changed
+
+   - name: Install Vundle
      git:
        repo: 'https://github.com/VundleVim/Vundle.vim.git'
        dest: /home/pi/.vim/bundle/Vundle.vim
@@ -79,8 +113,9 @@
      with_items:
        - { src: 'tmux.conf', dest: '/home/pi/.tmux.conf' }
        - { src: 'vim.rc', dest: '/home/pi/.vimrc' }
+       - { src: 'zsh.rc', dest: 'home/pi/.zshrc'}
 
-   - name: Creation of own bin files 
+   - name: Creation of own bin files
      file:
        path: /home/pi/bin
        owner: pi
@@ -92,3 +127,11 @@
        url: https://cht.sh/:cht.sh
        dest: /home/pi/bin/cht.sh
        mode: 0700
+
+   - name: Download of Pet (Snippit manager)
+     get_url:
+       url: https://github.com/knqyf263/pet/releases/download/v0.3.0/pet_0.3.0_linux_amd64.deb
+       dest: /tmp/pet_0.3.0_linux_amd64.deb
+
+   - name: Install Pet
+     command: dpkg -i /tmp/pet_0.3.0_linux_amd64.deb

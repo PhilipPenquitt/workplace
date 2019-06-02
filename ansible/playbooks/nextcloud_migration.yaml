@@ -1,0 +1,5 @@
+---
+- hosts: nextcloud
+  remote_user: root
+  roles:
+      - role: /Users/philip.penquitt/git/workplace/ansible/roles/nextcloud

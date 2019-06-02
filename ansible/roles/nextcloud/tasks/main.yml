@@ -1,9 +1,88 @@
 ---
 
-- name: Install php packages
+- name: Install necessary packages
   package:
     name: "{{ item }}"
     state: present
   with_items:
-    - php
-    -  
+    - epel-release
+    - yum-utils
+    - unzip
+    - curl
+    - wget
+    - bash-completion
+    - policycoreutils-python
+    - mlocate
+    - bzip2
+
+- name: Update the System
+  yum:
+    name: '*'
+    state: latest
+
+- name: Update Installation Softwarecollection
+  package:
+    name: centos-release-scl
+    state: latest
+
+- name: Install necessary php packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rh-php72
+    - rh-php72-php
+    - rh-php72-php-gd
+    - rh-php72-php-mbstring
+    - rh-php72-php-intl
+    - rh-php72-php-pecl-apcu
+    - rh-php72-php-mysqlnd
+    - rh-php72-php-pecl-redis
+    - rh-php72-php-opcache
+    - rh-php72-php-imagick
+
+- name: Install Apache
+  package:
+    name: httpd24
+    state: latest
+
+- name: Create Modules directory for Apache
+  file:
+   path: /etc/httpd/{{ item }}
+   state: directory
+  with_items:
+    - conf.modules.d
+    - modules
+
+- name: Symlinks for Apache
+  file:
+   src: /opt/rh/httpd24/root/etc/httpd/conf.d/rh-php72-php.conf
+   dest: /etc/httpd/conf.d/rh-php72-php.conf
+   state: link
+
+- name: Symlinks for Apache
+  file:
+   src: /opt/rh/httpd24/root/etc/httpd/modules/librh-php72-php7.so
+   dest: /etc/httpd/modules/librh-php72-php7.so
+   state: link
+
+- name: Symlinks for Apache
+  file:
+   src: /opt/rh/httpd24/root/etc/httpd/conf.modules.d/15-rh-php72-php.conf
+   dest: /etc/httpd/conf.modules.d/15-rh-php72-php.conf
+   state: link
+
+- name: Add PHP to Path
+  file:
+   src: /opt/rh/rh-php72/root/bin/php
+   dest: /usr/bin/php
+   state: link
+
+- name: Install Databases
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - mariadb
+  - mariadb-server
+  - redis
