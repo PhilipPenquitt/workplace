@@ -19,6 +19,12 @@ Plugin 'ludokng/vim-odyssey'
 Plugin 'bling/vim-bufferline'
 Plugin 'timakro/vim-searchant'
 Plugin 'tpope/vim-surround'
+Plugin 'dracula/vim'
+Plugin 'matveyt/vim-modest'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'takac/vim-hardtime'
+Plugin 'machakann/vim-highlightedyank'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -36,7 +42,32 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-""" Colors """
+" Learning VIM with Hardtime
+let g:hardtime_default_on = 1
+let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_allow_different_key = 1
+let g:hardtime_maxcount = 2
+
+"## Nerdtree Settings ##"
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+"## Colors ##"
 
 " Default Colors for CursorLine
 " highlight  CursorLine ctermbg=Yellow ctermfg=None
@@ -50,6 +81,11 @@ set background=dark
 let g:airline_powerline_fonts = 1
 let g:airline_theme='deus'
 let g:airline#extensions#tabline#enabled = 1
+      
+" set Listchars
+" set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:< " could be extended by space
+set list
 
 " Suchen werden hervorgehoben + toggle ermöglicht
 nmap <leader>t :noh<CR>
@@ -66,6 +102,8 @@ set textwidth=79
 set showmatch
 set showcmd
 set wildcharm=<C-Z>
+" Substitutuin werden live ausgefuehrt http://vimcasts.org/episodes/neovim-eyecandy/
+set inccommand=nosplit
 nnoremap <F10> :b <C-Z>
 imap <C-L> <Esc>
 
@@ -80,7 +118,7 @@ set clipboard=unnamedplus
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " Splits and movement
-set splitbelow
+" set splitbelow erstmal entfernt.
 set splitright
 
 " Liste an Buffern wird gezeigt und es kann direkt der gewuenschte ausgewaehlt
@@ -90,24 +128,13 @@ nnoremap gb :ls<cr>:b
 " Leader neu gesetzt sowie buffer next umgestellt
 let mapleader = "-"
 nnoremap <leader>n :bn<cr>
+nnoremap <leader>p :bp<cr>
+nnoremap <leader>f :NERDTreeToggle<cr>
 
 " Finding Files:
 " Search Down into Subfolders
 " Provides Tab Completion for all file related Tasks
 set path+=**
-
-" Explorer Settings
-" Open File in Current Buffer
-let g:netrw_browse_split = 4
-
-" Remove Banner from netrw
-let g:netrw_banner = 0
-
-" Size in percentage of Netrw Split
-let g:netrw_winsize = 15
-
-" Style of File Explorer
-let g:netrw_liststyle = 3
 
 """"""" Plugin Controll """""""
 " Tmux Navigator Konfigurationen
@@ -120,6 +147,7 @@ let g:tmux_navigator_disable_when_zoomed = 1
 
 " Syntastic empfohlene Einstellungen
 let g:syntastic_python_checkers = ['pep8']
+let g:syntastic_markdown_checkers = ['mdl']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
