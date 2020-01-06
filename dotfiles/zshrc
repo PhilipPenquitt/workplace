@@ -1,17 +1,14 @@
-export TERM="xterm-256color"
-KEYTIMEOUT=1
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/philip.penquitt/.oh-my-zsh"
-export EDITOR="vim"
+export ZSH="/home/phpe/.oh-my-zsh"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
-# ZSH_THEME="powerlevel9k/powerlevel9k"
+#ZSH_THEME="robbyrussell"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
@@ -46,10 +43,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -72,13 +69,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-git
+plugins=(git
+vi-mode
 tmuxinator
-tmux
 taskwarrior
-httpie
-vi-mode)
+#zsh-autosuggestions
+zsh-syntax-highlighting
+extract
+docker)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -105,26 +103,15 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
-alias mux="tmuxinator"
-alias cheat='~/bin/cht.sh --shell'
-alias b='buku --suggest'
-alias bs='buku --suggest -s'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+alias sc="ssh serviceshell"
+alias vim="/usr/bin/nvim"
+alias python="/usr/bin/python3"
+alias sbksc="/export/lix_dstore/services/sbk/admin/phpe"
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(host dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history vi_mode)
-# Shorten Strategie for normal cli
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_SHORTEN_DELIMITER=""
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
-# Shorten Strategie for Git
-POWERLEVEL9K_VCS_SHORTEN_LENGTH=4
-POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH=8
-POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_from_right"
-POWERLEVEL9K_VCS_SHORTEN_DELIMITER=".."
-
-eval $(thefuck --alias)
+# Autosuggestion
+# ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="#999C9C, bg=yellow, underline"
+# bindkey '^ ' autosuggest-accept
