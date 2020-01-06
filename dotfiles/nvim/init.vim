@@ -1,5 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+set modeline
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -11,7 +12,7 @@ Plugin 'tpope/vim-fugitive' " plugin on GitHub repo
 Plugin 'morhetz/gruvbox' " Different Themes for vim
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-syntastic/syntastic'
-" Plugin 'sheerun/vim-polyglot'
+Plugin 'sheerun/vim-polyglot'
 Plugin 'dense-analysis/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -25,6 +26,11 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'takac/vim-hardtime'
 Plugin 'machakann/vim-highlightedyank'
+Plugin 'sickill/vim-monokai'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'godlygeek/tabular'
+Plugin 'pearofducks/ansible-vim'
+Plugin 'dracula/vim', { 'name': 'dracula' }
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -81,7 +87,7 @@ set background=dark
 let g:airline_powerline_fonts = 1
 let g:airline_theme='deus'
 let g:airline#extensions#tabline#enabled = 1
-      
+
 " set Listchars
 " set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:< " could be extended by space
@@ -115,7 +121,8 @@ imap <C-L> <Esc>
 set clipboard=unnamedplus
 
 " yaml indention
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType yaml.ansible setlocal ts=2 sts=2 sw=2 expandtab
+let g:polyglot_disabled = ['yaml']
 
 " Splits and movement
 " set splitbelow erstmal entfernt.
@@ -136,6 +143,20 @@ nnoremap <leader>f :NERDTreeToggle<cr>
 " Provides Tab Completion for all file related Tasks
 set path+=**
 
+" Terminal Movement
+
+if has('nvim')
+  " Terminal mode:
+  tnoremap <C-h> <c-\><c-n><c-w>h
+  tnoremap <C-j> <c-\><c-n><c-w>j
+  tnoremap <C-k> <c-\><c-n><c-w>k
+  tnoremap <C-l> <c-\><c-n><c-w>l
+  " Escape Squences
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <M-[> <Esc>
+  tnoremap <C-l> <C-\><C-n>
+endif
+
 """"""" Plugin Controll """""""
 " Tmux Navigator Konfigurationen
 
@@ -148,6 +169,7 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " Syntastic empfohlene Einstellungen
 let g:syntastic_python_checkers = ['pep8']
 let g:syntastic_markdown_checkers = ['mdl']
+let g:syntastic_yaml_ansible_checkers = ['ansible/ansible-lint', 'yaml/yamllint']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -156,3 +178,5 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+
