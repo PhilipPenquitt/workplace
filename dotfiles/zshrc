@@ -110,8 +110,14 @@ alias sc="ssh serviceshell"
 alias vim="/usr/bin/nvim"
 alias python="/usr/bin/python3"
 alias sbksc="/export/lix_dstore/services/sbk/admin/phpe"
+alias ls="colorls -lA --sd"
+alias ll="colorls -lA --sd"
 
 # Autosuggestion
 # ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="#999C9C, bg=yellow, underline"
 # bindkey '^ ' autosuggest-accept
+
+http_proxy="http://proxy.mms-dresden.de:8080"
+https_proxy="http://proxy.mms-dresden.de:8080"
+ftp_proxy="http://proxy.mms-dresden.de:8080"
