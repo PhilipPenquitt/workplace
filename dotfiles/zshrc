@@ -1,5 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Path erweitert
+path+=('/home/phpe/.local/bin/')
+export PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/phpe/.oh-my-zsh"
@@ -85,8 +88,10 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
+# Editor
+export EDITOR='vim'
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
@@ -96,6 +101,12 @@ source $ZSH/oh-my-zsh.sh
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+
+# MMS Proxy
+
+export http_proxy="http://proxy.mms-dresden.de:8080"
+export https_proxy="http://proxy.mms-dresden.de:8080"
+export ftp_proxy="http://proxy.mms-dresden.de:8080"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -118,6 +129,21 @@ alias ll="colorls -lA --sd"
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="#999C9C, bg=yellow, underline"
 # bindkey '^ ' autosuggest-accept
 
-http_proxy="http://proxy.mms-dresden.de:8080"
-https_proxy="http://proxy.mms-dresden.de:8080"
-ftp_proxy="http://proxy.mms-dresden.de:8080"
+
+# Fuzzy Finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Funktionen fuer Pet Snippet manager
+function prev() {
+  PREV=$(fc -lrn | head -n 1)
+  sh -c "pet new `printf %q "$PREV"`"
+}
+
+function pet-select() {
+  BUFFER=$(pet search --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+zle -N pet-select
+stty -ixon
+bindkey '^s' pet-select

@@ -36,6 +36,9 @@ Plugin 'dracula/vim', { 'name': 'dracula' }
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+" Plugin welches nicht ueber vundle geladen wird
+set rtp+=~/bin/fzf
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -80,7 +83,7 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " highlight CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white guibg=darkyellow guifg=white
 set t_Co=256
 syntax on
-colorscheme gruvbox
+colorscheme desert
 " colorscheme odyssey
 set background=dark
 " set termguicolors
